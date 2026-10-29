@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="Generate Salesforce package.xml manifests directly in your browser."
+    >
+
+    <meta name="theme-color" content="#f5f8fc">
+
+    <title>PackageXML Studio | Salesforce Package.xml Generator</title>
+    <link rel="icon" type="image/png" href= "favicon.png">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="site-header" id="home">
+        <a class="brand" href="#home" aria-label="PackageXML Studio home">
+            <span class="brand-cloud" aria-hidden="true">☁</span>
+            <span>PackageXML <b>Studio</b></span>
+        </a>
+
+        <nav aria-label="Main navigation">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#how-to-use">How to Use</a>
+
+            <button
+                class="theme-toggle"
+                id="themeToggle"
+                type="button"
+                aria-label="Toggle dark mode"
+                title="Toggle dark mode"
+            >
+                ☼ / ☾
+            </button>
+        </nav>
+    </header>
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <main class="page-shell">
+
+        <!-- ================= HERO ================= -->
+
+        <section class="hero" id="about">
+
+            <div class="hero-copy">
+
+                <p class="eyebrow">
+                    SIMPLE · FAST · SECURE · FRONTEND ONLY
+                </p>
+
+                <h1>
+                    Salesforce
+                    <span>Package.xml</span>
+                    Generator
+                </h1>
+
+                <p class="hero-description">
+                    Create your package.xml file quickly and easily.
+                    Select metadata types, enter component names separately
+                    for each type, choose your API version, and generate
+                    a manifest for your Salesforce development workflow.
+                </p>
+
+                <div class="trust-row">
+
+                    <div class="trust-item">
+                        <span class="trust-icon" aria-hidden="true">ϟ</span>
+
+                        <span>
+                            <strong>100% Frontend</strong>
+                            <small>Runs in your browser</small>
+                        </span>
+                    </div>
+
+                    <div class="trust-item">
+                        <span class="trust-icon" aria-hidden="true">◇</span>
+
+                        <span>
+                            <strong>No Authentication</strong>
+                            <small>No org connection required</small>
+                        </span>
+                    </div>
+
+                    <div class="trust-item">
+                        <span class="trust-icon" aria-hidden="true">▣</span>
+
+                        <span>
+                            <strong>No Data Stored</strong>
+                            <small>No server-side storage</small>
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <!-- Decorative illustration -->
+
+            <div class="hero-illustration" aria-hidden="true">
+
+                <div class="code-card">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                </div>
+
+                <div class="file-card">
+                    <div class="file-cloud">☁</div>
+                    <b>package.xml</b>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= WORKSPACE ================= -->
+
+        <section class="workspace" aria-label="Package XML generator workspace">
+
+
+            <!-- ================= LEFT COLUMN ================= -->
+
+            <section class="panel builder-panel">
+
+
+                <!-- STEP 1: METADATA TYPES -->
+
+                <div class="step">
+
+                    <div class="step-heading">
+
+                        <span class="step-number">1</span>
+
+                        <div>
+                            <h2>Select metadata types</h2>
+
+                            <p>
+                                Choose the metadata you want to include
+                                in your manifest.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <!-- Search and filter -->
+
+                    <div class="search-row">
+
+                        <input
+                            id="search"
+                            type="search"
+                            placeholder="Search metadata type..."
+                            aria-label="Search metadata types"
+                        >
+
+                        <select
+                            id="typeFilter"
+                            aria-label="Filter metadata types"
+                        >
+                            <option value="all">All types</option>
+                            <option value="popular">Popular types</option>
+                        </select>
+
+                    </div>
+
+
+                    <!-- Metadata cards generated by JavaScript -->
+
+                    <div
+                        id="types"
+                        class="metadata-grid"
+                        aria-label="Available metadata types"
+                    ></div>
+
+
+                    <!-- Selection actions -->
+
+                    <div class="selection-tools">
+
+                        <span
+                            id="selectedCount"
+                            aria-live="polite"
+                        >
+                            3 metadata types selected
+                        </span>
+
+                        <div class="selection-actions">
+
+                            <button
+                                id="selectAll"
+                                class="text-button"
+                                type="button"
+                            >
+                                Select all
+                            </button>
+
+                            <button
+                                id="selectPopular"
+                                class="text-button"
+                                type="button"
+                            >
+                                Select popular
+                            </button>
+
+                            <button
+                                id="deselectAll"
+                                class="text-button"
+                                type="button"
+                            >
+                                Clear all
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- STEP 2: COMPONENT NAMES -->
+
+                <div class="step">
+
+                    <div class="step-heading">
+
+                        <span class="step-number">2</span>
+
+                        <div>
+                            <h2>Component names</h2>
+
+                            <p>
+                                Enter names separately for each selected
+                                metadata type.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <!-- Component input explanation -->
+
+                    <div class="component-toolbar">
+
+                        <span class="field-label">
+                            Metadata-specific component names
+                        </span>
+
+                        <button
+                            id="example"
+                            class="secondary-button"
+                            type="button"
+                        >
+                            + Load example
+                        </button>
+
+                    </div>
+
+
+                    <!--
+                        JavaScript creates a separate textarea for every
+                        selected metadata type.
+                    -->
+
+                    <div
+                        id="componentInputs"
+                        class="component-inputs"
+                        aria-live="polite"
+                    >
+                        <p class="empty-state">
+                            Select a metadata type above to enter
+                            its component names.
+                        </p>
+                    </div>
+
+
+                    <div class="field-foot">
+                        <span>
+                            Enter one component name per line.
+                        </span>
+
+                        <span id="nameCount" aria-live="polite">
+                            0 names
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <!-- STEP 3: API VERSION AND MANIFEST MODE -->
+
+                <div class="step last-step">
+
+                    <div class="step-heading">
+
+                        <span class="step-number">3</span>
+
+                        <div>
+                            <h2>Manifest settings</h2>
+
+                            <p>
+                                Configure the API version and
+                                component selection mode.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="version-grid">
+
+                        <label for="version">
+                            Salesforce API version
+
+                            <select id="version">
+                                <!-- Populated by app.js -->
+                            </select>
+                        </label>
+
+
+                        <label for="manifestMode">
+                            Manifest mode
+
+                            <select id="manifestMode">
+
+                                <option value="names">
+                                    Specific component names
+                                </option>
+
+                                <option value="wildcard">
+                                    All members (*)
+                                </option>
+
+                            </select>
+                        </label>
+
+                    </div>
+
+
+                    <!-- Wildcard warning -->
+
+                    <div
+                        id="wildcardWarning"
+                        class="wildcard-warning"
+                        role="alert"
+                        hidden
+                    >
+
+                        <strong>
+                            ⚠ Wildcard mode is enabled
+                        </strong>
+
+                        <p>
+                            The generated manifest will use
+                            <code>*</code> for every selected metadata type.
+                            This may include all members of those types.
+                            Review your selections before downloading.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ================= RIGHT COLUMN ================= -->
+
+            <div class="right-column">
+
+
+                <!-- ================= XML PREVIEW ================= -->
+
+                <section
+                    class="panel preview-panel"
+                    aria-label="Generated XML preview"
+                >
+
+                    <div class="preview-heading">
+
+                        <div class="preview-title">
+
+                            <span
+                                class="document-icon"
+                                aria-hidden="true"
+                            >
+                                ▤
+                            </span>
+
+                            <div>
+                                <h2>Generated package.xml</h2>
+
+                                <p>
+                                    Review your manifest before exporting.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <!-- Validation and readiness status -->
+
+                        <span
+                            class="status-pill"
+                            id="status"
+                            role="status"
+                            aria-live="polite"
+                        >
+                            Preparing XML
+                        </span>
+
+                    </div>
+
+
+                    <!-- XML code window -->
+
+                    <div class="code-window">
+
+                        <div class="code-toolbar">
+
+                            <span>
+                                XML
+                                <span class="code-dot">●</span>
+                                package.xml
+                            </span>
+
+                            <button
+                                id="format"
+                                type="button"
+                            >
+                                ↻ Refresh preview
+                            </button>
+
+                        </div>
+
+
+                        <!--
+                            XML is displayed as text to prevent HTML
+                            syntax-highlighting markup from entering the
+                            copied or downloaded XML.
+                        -->
+
+                        <pre
+                            id="preview"
+                            aria-label="Generated package XML"
+                            tabindex="0"
+                        ></pre>
+
+                    </div>
+
+
+                    <!-- XML validation explanation -->
+
+                    <p class="validation-note">
+                        XML structure is checked before copying
+                        or downloading. Salesforce deployment compatibility
+                        is not verified by this browser-only tool.
+                    </p>
+
+
+                    <!-- Export actions -->
+
+                    <div class="actions">
+
+                        <button
+                            id="download"
+                            class="primary-button"
+                            type="button"
+                        >
+                            ⇩ Download package.xml
+                        </button>
+
+                        <button
+                            id="copy"
+                            class="secondary-button"
+                            type="button"
+                        >
+                            ▣ Copy XML
+                        </button>
+
+                        <button
+                            id="clear"
+                            class="danger-button"
+                            type="button"
+                        >
+                            Clear all
+                        </button>
+
+                    </div>
+
+
+                    <!-- Privacy note -->
+
+                    <p class="privacy-note">
+                        ✓ XML generation runs locally in your browser.
+                        No Salesforce credentials are required.
+                    </p>
+
+                </section>
+
+
+
+                <!-- ================= QUICK TIPS ================= -->
+
+                <section
+                    class="panel tips-panel"
+                    id="how-to-use"
+                >
+
+                    <h3>
+                        <span aria-hidden="true">✦</span>
+                        Quick tips
+                    </h3>
+
+                    <ol>
+                        <li>
+                            Select the metadata types you need.
+                        </li>
+
+                        <li>
+                            Enter component names in their respective fields.
+                        </li>
+
+                        <li>
+                            Choose the API version and manifest mode.
+                        </li>
+
+                        <li>
+                            Review the XML preview and validation status.
+                        </li>
+
+                        <li>
+                            Copy or download the generated package.xml.
+                        </li>
+                    </ol>
+
+
+                    <p class="note">
+                        <strong>Note:</strong>
+                        This tool generates a manifest only.
+                        It does not connect to Salesforce, verify that
+                        components exist, or deploy metadata.
+                    </p>
+
+                </section>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= FEATURES ================= -->
+
+        <section
+            class="feature-strip"
+            aria-label="Application benefits"
+        >
+
+            <div class="feature">
+
+                <span class="feature-icon" aria-hidden="true">ϟ</span>
+
+                <div>
+                    <strong>Fast and simple</strong>
+                    <small>Generate manifests in seconds</small>
+                </div>
+
+            </div>
+
+
+            <div class="feature">
+
+                <span class="feature-icon" aria-hidden="true">◇</span>
+
+                <div>
+                    <strong>Private by design</strong>
+                    <small>Processing stays in your browser</small>
+                </div>
+
+            </div>
+
+
+            <div class="feature">
+
+                <span class="feature-icon" aria-hidden="true">▤</span>
+
+                <div>
+                    <strong>No backend required</strong>
+                    <small>No login or database required</small>
+                </div>
+
+            </div>
+
+
+            <div class="feature">
+
+                <span class="feature-icon" aria-hidden="true">▣</span>
+
+                <div>
+                    <strong>Responsive design</strong>
+                    <small>Desktop, tablet, and mobile</small>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <div class="footer-brand">
+
+            <span class="brand-cloud" aria-hidden="true">☁</span>
+
+            <div>
+                <strong>PackageXML Studio</strong>
+
+                <small>
+                    A browser-based tool for Salesforce developers.
+                </small>
+            </div>
+
+        </div>
+
+
+        <div class="footer-links">
+
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#how-to-use">How to Use</a>
+
+        </div>
+
+
+        <div class="footer-credit">
+
+            Made with <span aria-label="love">♥</span>
+            for the Salesforce community
+
+            <br>
+
+            <small>Not affiliated with Salesforce.</small>
+
+        </div>
+
+    </footer>
+
+
+
+    <!-- ================= TOAST NOTIFICATION ================= -->
+
+    <div
+        id="toast"
+        class="toast"
+        role="status"
+        aria-live="polite"
+    ></div>
+
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script src="app.js"></script>
+
+</body>
+</html>
